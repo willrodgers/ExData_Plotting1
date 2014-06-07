@@ -1,6 +1,7 @@
 # Load data from the text file
 source("loadData.R")
-power_data <- loadData("household_power_consumption.txt")
+power_data <- loadData("household_power_consumption.txt", 
+                       c("1/2/2007", "2/2/2007"))
 
 # Create the plot
 png("figure/plot2.png",  width = 480, height = 480, units = "px")

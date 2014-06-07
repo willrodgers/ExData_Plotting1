@@ -1,9 +1,15 @@
-loadData <- function(file) {
+# Loads a text file of electric power consumption from the
+# specified file, and subsets the data set based on the 
+# specified list of date strings (in d/m/yyyy format).
+# Requires data.table, which is used for faster file parsing.
+loadData <- function(file, dates=c()) {
   
   require(data.table)
   
-  power_data <- fread(file)
-  power_data <- power_data[Date %in% c("1/2/2007", "2/2/2007"),]
+  power_data <- fread(file)  
+  if (length(dates) > 0) {
+    power_data <- power_data[Date %in% dates,]
+  }
   power_data <- as.data.frame(power_data)
   power_data$Datetime <- strptime(paste(power_data$Date, power_data$Time), "%d/%m/%Y %H:%M:%S")
   power_data$Global_active_power <- as.numeric(power_data$Global_active_power)
